@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.IO;
 using System.Linq;
 using System.Runtime.InteropServices.WindowsRuntime;
@@ -28,8 +29,11 @@ namespace DeepLinkForXamarinDemo.UWP
         /// </summary>
         public App()
         {
+            Debug.WriteLine("On UWP App()");
             this.InitializeComponent();
             this.Suspending += OnSuspending;
+            this.LeavingBackground += OnLeavingBackground;
+            this.EnteredBackground += OnEnteredBackground;
         }
 
         /// <summary>
@@ -40,13 +44,7 @@ namespace DeepLinkForXamarinDemo.UWP
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
 
-#if DEBUG
-            if (System.Diagnostics.Debugger.IsAttached)
-            {
-                this.DebugSettings.EnableFrameRateCounter = true;
-            }
-#endif
-
+            Debug.WriteLine("OnLaunched");
             Frame rootFrame = Window.Current.Content as Frame;
 
             // Do not repeat app initialization when the Window already has content,
@@ -99,6 +97,7 @@ namespace DeepLinkForXamarinDemo.UWP
         /// <param name="e">Details about the suspend request.</param>
         private void OnSuspending(object sender, SuspendingEventArgs e)
         {
+            Debug.WriteLine("OnSuspending");
             var deferral = e.SuspendingOperation.GetDeferral();
             //TODO: Save application state and stop any background activity
             deferral.Complete();
@@ -107,7 +106,7 @@ namespace DeepLinkForXamarinDemo.UWP
 
         protected override void OnActivated(IActivatedEventArgs e)
         {
-
+            Debug.WriteLine("hello OnActivated");
             if (e.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)e;
@@ -128,6 +127,17 @@ namespace DeepLinkForXamarinDemo.UWP
                         break;
                 }
             }
+        }
+
+        public  void OnLeavingBackground(System.Object sender, LeavingBackgroundEventArgs e)
+        {
+            Debug.WriteLine("GoodBye Background");
+        }
+
+
+        public void OnEnteredBackground(System.Object sender, EnteredBackgroundEventArgs e)
+        {
+            Debug.WriteLine("Hello Background");
         }
 
     }

@@ -107,45 +107,27 @@ namespace DeepLinkForXamarinDemo.UWP
 
         protected override void OnActivated(IActivatedEventArgs e)
         {
-            // set up frame
-            Frame rootFrame = Window.Current.Content as Frame;
 
-            if (rootFrame == null)
-            {
-                // Create a Frame to act as the navigation context and navigate to the first page
-                rootFrame = new Frame();
-                rootFrame.NavigationFailed += OnNavigationFailed;
-
-                Window.Current.Content = rootFrame;
-            }
-
-            Type deepLinkPageType = typeof(MainPage);
             if (e.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)e;
-                switch (protocolArgs.Uri.AbsolutePath)
+                string absolutePath = protocolArgs.Uri.AbsolutePath;
+                switch (absolutePath)
                 {
                     case "/":
+                        Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
                         break;
                     case "/index.html":
+                        Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
                         break;
                     case "/page1.html":
-                        deepLinkPageType = typeof(Page1);
+                        Xamarin.Forms.Application.Current.Properties["startURL"] = "page1";
                         break;
                     case "/page2.html":
-                        deepLinkPageType = typeof(Page2);
+                        Xamarin.Forms.Application.Current.Properties["startURL"] = "page2";
                         break;
                 }
             }
-
-            if (rootFrame.Content == null)
-            {
-                // Default navigation
-                rootFrame.Navigate(deepLinkPageType, e);
-            }
-
-            // Ensure the current window is active
-            Window.Current.Activate();
         }
 
     }

@@ -12,12 +12,33 @@ namespace DeepLinkForXamarinDemo
         public App()
         {
             // The root page of your application
-            MainPage = new NavigationPage(new MainPage());
+            MainPage = new NavigationPage(new RealMainPage());
+            Application.Current.Properties["page1"] = new Page1();
+            Application.Current.Properties["page2"] = new Page2();
+            Application.Current.Properties["mainpage"] = new RealMainPage();
         }
 
         protected override void OnStart()
         {
-            // Handle when your app starts
+           
+            string startURL = (string)Application.Current.Properties["startURL"];
+            if (startURL == null)
+            {
+                return;
+            }
+            switch (startURL)
+            {
+                case "page1":
+                    MainPage = (Page1)Application.Current.Properties[startURL];
+                    break;
+                case "page2":
+                    MainPage = (Page2)Application.Current.Properties[startURL];
+                    break;
+                case "mainpage":
+                    MainPage = (RealMainPage)Application.Current.Properties[startURL];
+                    break;
+            }
+            
         }
 
         protected override void OnSleep()
@@ -27,7 +48,23 @@ namespace DeepLinkForXamarinDemo
 
         protected override void OnResume()
         {
-            // Handle when your app resumes
+            string startURL = (string)Application.Current.Properties["startURL"];
+            if (startURL == null)
+            {
+                return;
+            }
+            switch (startURL)
+            {
+                case "page1":
+                    MainPage = (Page1)Application.Current.Properties[startURL];
+                    break;
+                case "page2":
+                    MainPage = (Page2)Application.Current.Properties[startURL];
+                    break;
+                case "mainpage":
+                    MainPage = (RealMainPage)Application.Current.Properties[startURL];
+                    break;
+            }
         }
     }
 }

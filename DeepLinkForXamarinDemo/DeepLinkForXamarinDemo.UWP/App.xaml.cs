@@ -104,11 +104,9 @@ namespace DeepLinkForXamarinDemo.UWP
 
         protected override void OnActivated(IActivatedEventArgs e)
         {
-            Frame rootFrame = Window.Current.Content as Frame;
+           
             Debug.WriteLine("hello OnActivated");
-
-
-            Type deepLinkPageType = typeof(RealMainPage);
+            //Type deepLinkPageType = typeof(RealMainPage);
             if (e.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)e;
@@ -117,32 +115,33 @@ namespace DeepLinkForXamarinDemo.UWP
                 {
                     case "/":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
-                        deepLinkPageType = typeof(RealMainPage);
+                        //deepLinkPageType = typeof(RealMainPage);
                         break;
                     case "/index.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
-                        deepLinkPageType = typeof(RealMainPage);
+                        //deepLinkPageType = typeof(RealMainPage);
                         break;
                     case "/page1.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "page1";
-                        deepLinkPageType = typeof(Page1);
+                        //deepLinkPageType = typeof(Page1);
                         break;
                     case "/page2.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "page2";
-                        deepLinkPageType = typeof(Page2);
+                       // deepLinkPageType = typeof(Page2);
                         break;
                 }
             }
-            if (rootFrame.Content == null)
-            {
-                // Default navigation
-                rootFrame.Navigate(deepLinkPageType, e);
-            }
+            //if (rootFrame.Content == null)
+            //{
+            //    // Default navigation
+            //    rootFrame.Navigate(deepLinkPageType, e);
+            //}
 
-
+            InitFristPageClass.initFirstPage();
             // Ensure the current window is active
+           
             new RealMainPage();
-            Window.Current.Activate();
+            //Window.Current.Activate();
 
         }
 

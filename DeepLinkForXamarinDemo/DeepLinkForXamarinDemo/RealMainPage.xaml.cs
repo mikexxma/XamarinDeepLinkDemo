@@ -9,14 +9,13 @@ using Xamarin.Forms;
 
 namespace DeepLinkForXamarinDemo
 {
-    public partial class RealMainPage : ContentPage
+
+    public static class InitFristPageClass
     {
-        Page firstPage = new Page();
-        public RealMainPage()
+        public static Page firstPage;
+        public static void initFirstPage()
         {
-            Debug.WriteLine("Init RealMainPage");
-            InitializeComponent();
-            
+           
             string startURL = null;
             try
             {
@@ -39,14 +38,33 @@ namespace DeepLinkForXamarinDemo
             }
             catch (Exception e)
             {
-                
+
             }
-            Navigation.PushAsync(firstPage);
         }
+    }
+
+    public partial class RealMainPage : ContentPage
+    {
+        public RealMainPage()
+        {
+            Debug.WriteLine("Init RealMainPage");
+            InitializeComponent();
+            if (InitFristPageClass.firstPage != null)
+            {
+                Navigation.PushAsync(InitFristPageClass.firstPage);
+            }
+            
+        }
+
+       
 
         async void onPageBtClick(object sender, EventArgs e)
         {
-            await Navigation.PushAsync(firstPage);
+            if (InitFristPageClass.firstPage != null)
+            {
+                await MyFrame.Navigation.PushAsync(InitFristPageClass.firstPage);
+            }
+            
         }
 
 

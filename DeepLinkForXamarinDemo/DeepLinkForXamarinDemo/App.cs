@@ -17,22 +17,32 @@ namespace DeepLinkForXamarinDemo
             Application.Current.Properties["page1"] = new Page1();
             Application.Current.Properties["page2"] = new Page2();
             Application.Current.Properties["mainpage"] = new RealMainPage();
-            Application.Current.Properties["startURL"] = "mainpage";
-                    
+
             Debug.WriteLine("hello APP()");
-            string startURL = (string)Application.Current.Properties["startURL"];
-            switch (startURL)
+            try
             {
-                case "page1":
-                    MainPage = (Page1)Application.Current.Properties[startURL];
-                    break;
-                case "page2":
-                    MainPage = (Page2)Application.Current.Properties[startURL];
-                    break;
-                case "mainpage":
-                    MainPage = (RealMainPage)Application.Current.Properties[startURL];
-                    break;
+                string startURL = (string)Application.Current.Properties["startURL"];
+                switch (startURL)
+                {
+                    case "page1":
+                        MainPage = new NavigationPage((Page1)Application.Current.Properties[startURL]);
+                        break;
+                    case "page2":
+                        MainPage = new NavigationPage((Page2)Application.Current.Properties[startURL]);
+                        break;
+                    case "mainpage":
+                        MainPage = new NavigationPage((RealMainPage)Application.Current.Properties[startURL]);
+                        break;
+                }
+
             }
+            catch (Exception e)
+            {
+                MainPage = new NavigationPage((RealMainPage)new RealMainPage());
+            }
+            
+           
+            //MainPage = new NavigationPage(new RealMainPage());
 
         }
 

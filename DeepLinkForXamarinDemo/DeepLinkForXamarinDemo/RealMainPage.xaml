@@ -4,8 +4,8 @@
              x:Class="DeepLinkForXamarinDemo.RealMainPage">
   <Grid>
     <Grid.RowDefinitions >
-      <RowDefinition Height="auto"></RowDefinition>
-     <RowDefinition Height="auto"></RowDefinition>
+      <RowDefinition ></RowDefinition>
+     <RowDefinition ></RowDefinition>
     </Grid.RowDefinitions>
   <Label Text="RealMainPage" VerticalOptions="Center" HorizontalOptions="Center" />
   

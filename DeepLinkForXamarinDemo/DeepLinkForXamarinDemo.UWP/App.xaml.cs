@@ -43,10 +43,8 @@ namespace DeepLinkForXamarinDemo.UWP
         /// <param name="e">Details about the launch request and process.</param>
         protected override void OnLaunched(LaunchActivatedEventArgs e)
         {
-
             Debug.WriteLine("OnLaunched");
             Frame rootFrame = Window.Current.Content as Frame;
-
             // Do not repeat app initialization when the Window already has content,
             // just ensure that the window is active
             if (rootFrame == null)
@@ -106,7 +104,11 @@ namespace DeepLinkForXamarinDemo.UWP
 
         protected override void OnActivated(IActivatedEventArgs e)
         {
+            Frame rootFrame = Window.Current.Content as Frame;
             Debug.WriteLine("hello OnActivated");
+
+
+            Type deepLinkPageType = typeof(RealMainPage);
             if (e.Kind == ActivationKind.Protocol)
             {
                 var protocolArgs = (ProtocolActivatedEventArgs)e;
@@ -115,18 +117,33 @@ namespace DeepLinkForXamarinDemo.UWP
                 {
                     case "/":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
+                        deepLinkPageType = typeof(RealMainPage);
                         break;
                     case "/index.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "mainpage";
+                        deepLinkPageType = typeof(RealMainPage);
                         break;
                     case "/page1.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "page1";
+                        deepLinkPageType = typeof(Page1);
                         break;
                     case "/page2.html":
                         Xamarin.Forms.Application.Current.Properties["startURL"] = "page2";
+                        deepLinkPageType = typeof(Page2);
                         break;
                 }
             }
+            if (rootFrame.Content == null)
+            {
+                // Default navigation
+                rootFrame.Navigate(deepLinkPageType, e);
+            }
+
+
+            // Ensure the current window is active
+            new RealMainPage();
+            Window.Current.Activate();
+
         }
 
         public  void OnLeavingBackground(System.Object sender, LeavingBackgroundEventArgs e)

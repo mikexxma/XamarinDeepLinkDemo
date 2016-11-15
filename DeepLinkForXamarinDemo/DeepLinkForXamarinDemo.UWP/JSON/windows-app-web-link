@@ -1,0 +1,5 @@
+[{
+  "packageFamilyName": "joaqu_nh7s0b45jarrj",
+  "paths": [ "*" ],
+  "excludePaths" : [ "/habitat*", "/lifespan*" ]
+ }]
